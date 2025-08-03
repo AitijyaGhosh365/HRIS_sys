@@ -2,12 +2,33 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <style>
+        #suggestions {
+            border: 1px solid #ccc;
+            background: white;
+            position: absolute;
+            max-height: 150px;
+            overflow-y: auto;
+            width: 200px;
+            display: none;
+            z-index: 10;
+        }
+
+        #suggestions div {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        #suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
     <h1>Company Employees</h1>
 
     <!-- Filter Form -->
-    <form method="GET" action="/">
+    <form method="GET" action="/" autocomplete="off">
         <label for="field">Filter By:</label>
         <select name="field" id="field">
             <option value="id">ID</option>
@@ -15,14 +36,16 @@
             <option value="email">Email</option>
         </select>
 
-        <input type="text" name="value" placeholder="Enter value..." required>
+        <input type="text" id="value" name="value" placeholder="Enter value..." required>
+        <div id="suggestions"></div>
+
         <button type="submit">Filter</button>
     </form>
 
     <br>
 
     <table border="1">
-        <tr><th>ID</th><th>Name</th><th>Designation</th><th>Details</th></tr>
+        <tr><th>ID</th><th>Name</th><th>Job Title</th><th>Details</th></tr>
         {% for emp in employees %}
         <tr>
             <td>{{ emp[0] }}</td>
@@ -32,5 +55,52 @@
         </tr>
         {% endfor %}
     </table>
+
+    <script>
+        const input = document.getElementById("value");
+        const suggestions = document.getElementById("suggestions");
+        const field = document.getElementById("field");
+
+        input.addEventListener("input", async () => {
+            const text = input.value;
+
+            if (field.value !== "first_name" || text.length < 4) {
+                suggestions.style.display = "none";
+                return;
+            }
+
+            const res = await fetch(`/autocomplete?prefix=${encodeURIComponent(text)}`);
+            if (!res.ok) return;
+
+            const data = await res.json();
+            suggestions.innerHTML = "";
+
+            if (data.length === 0) {
+                suggestions.style.display = "none";
+                return;
+            }
+
+            data.forEach(name => {
+                const div = document.createElement("div");
+                div.textContent = name;
+                div.addEventListener("click", () => {
+                    input.value = name;
+                    suggestions.style.display = "none";
+                });
+                suggestions.appendChild(div);
+            });
+
+            const rect = input.getBoundingClientRect();
+            suggestions.style.left = `${rect.left}px`;
+            suggestions.style.top = `${rect.bottom + window.scrollY}px`;
+            suggestions.style.display = "block";
+        });
+
+        document.addEventListener("click", (e) => {
+            if (e.target !== input && e.target.parentNode !== suggestions) {
+                suggestions.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>
