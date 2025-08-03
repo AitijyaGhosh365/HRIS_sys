@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Details</title>
+</head>
+<body>
+    <h2>Employee Info</h2>
+    <ul>
+        {% for key, value in employee.items() %}
+            <li><strong>{{ key.replace('_', ' ').title() }}:</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Attendance Records</h3>
+    <ul>
+        {% for att in attendance %}
+        <li>{{ att[0] }} - {{ att[1] }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Leave Records</h3>
+    <ul>
+        {% for lv in leaves %}
+        <li>{{ lv[0] }} ({{ lv[1] }} to {{ lv[2] }})</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Back to Dashboard</a>
+</body>
+</html>
