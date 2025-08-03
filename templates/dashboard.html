@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Company Employees</h1>
+
+    <!-- Filter Form -->
+    <form method="GET" action="/">
+        <label for="field">Filter By:</label>
+        <select name="field" id="field">
+            <option value="id">ID</option>
+            <option value="first_name">Name</option>
+            <option value="email">Email</option>
+        </select>
+
+        <input type="text" name="value" placeholder="Enter value..." required>
+        <button type="submit">Filter</button>
+    </form>
+
+    <br>
+
+    <table border="1">
+        <tr><th>ID</th><th>Name</th><th>Designation</th><th>Details</th></tr>
+        {% for emp in employees %}
+        <tr>
+            <td>{{ emp[0] }}</td>
+            <td>{{ emp[1] }}</td>
+            <td>{{ emp[2] }}</td>
+            <td><a href="/employee/{{ emp[0] }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
