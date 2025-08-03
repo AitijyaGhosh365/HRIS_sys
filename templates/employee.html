@@ -2,28 +2,80 @@
 <html>
 <head>
     <title>Employee Details</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #555;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
     <h2>Employee Info</h2>
-    <ul>
-        {% for key, value in employee.items() %}
-            <li><strong>{{ key.replace('_', ' ').title() }}:</strong> {{ value }}</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <tbody>
+            {% for key, value in employee.items() %}
+                <tr>
+                    <th>{{ key.replace('_', ' ').title() }}</th>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <h3>Attendance Records</h3>
-    <ul>
-        {% for att in attendance %}
-        <li>{{ att[0] }} - {{ att[1] }}</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for att in attendance %}
+            <tr>
+                <td>{{ att[0] }}</td>
+                <td>{{ att[1] }}</td>
+                <td>{{ att[2] }}</td>
+                <td>{{ att[3] }}</td>
+                <td>{{ att[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <h3>Leave Records</h3>
-    <ul>
-        {% for lv in leaves %}
-        <li>{{ lv[0] }} ({{ lv[1] }} to {{ lv[2] }})</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Leave Type</th>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lv in leaves %}
+            <tr>
+                <td>{{ lv[0] }}</td>
+                <td>{{ lv[1] }}</td>
+                <td>{{ lv[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <a href="/">Back to Dashboard</a>
 </body>
