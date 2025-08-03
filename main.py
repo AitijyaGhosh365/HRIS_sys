@@ -2,6 +2,9 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import psycopg2
+from functools import lru_cache
+from fastapi.responses import JSONResponse
+from fastapi import Query
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -16,11 +19,32 @@ def get_db_connection():
         port="6543"
     )
 
+
+@lru_cache(maxsize=1)
+def get_all_employees_cached():
+    print("⏳ Fetching from database (cache miss)...")
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT id, first_name, job_title, email FROM "18_EMPLOYEES_INFO" ORDER BY id')
+    data = cur.fetchall()
+    cur.close()
+    conn.close()
+    return data
+
+@app.get("/autocomplete")
+def autocomplete(prefix: str = Query(..., min_length=4)):
+    try:
+        employees = get_all_employees_cached()
+        # Unique first names starting with prefix (case-insensitive)
+        matches = list({e[1] for e in employees if e[1].lower().startswith(prefix.lower())})
+        return JSONResponse(matches[:10])  # return top 10 matches
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+    
 @app.get("/", response_class=HTMLResponse)
 def dashboard(request: Request, field: str = None, value: str = None):
     try:
-        conn = get_db_connection()
-        cur = conn.cursor()
+        employees = get_all_employees_cached()
 
         if field and value:
             allowed_fields = ['id', 'first_name', 'email']
@@ -28,26 +52,22 @@ def dashboard(request: Request, field: str = None, value: str = None):
                 return HTMLResponse(content="Invalid filter field", status_code=400)
 
             if field == 'id':
-                query = f'SELECT id, first_name, job_title FROM "18_EMPLOYEES_INFO" WHERE {field} = %s ORDER BY id'
-                cur.execute(query, (int(value),))
-            else:
-                query = f'SELECT id, first_name, job_title FROM "18_EMPLOYEES_INFO" WHERE {field} ILIKE %s ORDER BY id'
-                cur.execute(query, (f"%{value}%",))
+                filtered = [e for e in employees if str(e[0]) == value]
+            elif field == 'first_name':
+                filtered = [e for e in employees if value.lower() in e[1].lower()]
+            elif field == 'email':
+                filtered = [e for e in employees if value.lower() in e[3].lower()]
         else:
-            cur.execute('SELECT id, first_name, job_title FROM "18_EMPLOYEES_INFO" ORDER BY id')
-
-        employees = cur.fetchall()
-
-        cur.close()
-        conn.close()
+            filtered = employees
 
         return templates.TemplateResponse("dashboard.html", {
             "request": request,
-            "employees": employees
+            "employees": [(e[0], e[1], e[2]) for e in filtered]  # drop email before sending to template
         })
 
     except Exception as e:
         return HTMLResponse(content=f"Error: {e}", status_code=500)
+
 
 
 
