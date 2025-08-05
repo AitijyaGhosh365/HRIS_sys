@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Portal</title>
+</head>
+<body>
+    <h2>Welcome {{ username }}!</h2>
+
+        {% if message %}
+        <p style="color: green;">{{ message }}</p>
+        {% endif %}
+    <form method="POST" action="/checkin">
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit">Check In</button>
+    </form>
+
+    <form method="POST" action="/checkout">
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit">Check Out</button>
+    </form>
+</body>
+</html>
