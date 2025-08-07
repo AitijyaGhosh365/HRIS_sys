@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Dashboard</title>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - HRIX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         #suggestions {
-            border: 1px solid #ccc;
-            background: white;
             position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            z-index: 50;
+            width: 100%;
             max-height: 150px;
             overflow-y: auto;
-            width: 200px;
             display: none;
-            z-index: 10;
         }
 
         #suggestions div {
-            padding: 5px;
+            padding: 8px;
             cursor: pointer;
         }
 
@@ -24,37 +30,74 @@
         }
     </style>
 </head>
-<body>
-    <h1>Company Employees</h1>
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Filter Form -->
-    <form method="GET" action="/" autocomplete="off">
-        <label for="field">Filter By:</label>
-        <select name="field" id="field">
-            <option value="id">ID</option>
-            <option value="first_name">Name</option>
-            <option value="email">Email</option>
-        </select>
+    <!-- Navbar -->
+    <div class="navbar bg-white shadow-sm px-6 py-4 mb-6">
+        <div class="text-sky-500 text-2xl font-extrabold cursor-pointer"> <a href="/dashboard">HRIX Dashboard</a></div>
+    </div>
 
-        <input type="text" id="value" name="value" placeholder="Enter value..." required>
-        <div id="suggestions"></div>
+    <div class="max-w-6xl mx-auto px-6">
+        <!-- Heading -->
+        <h1 class="text-3xl font-bold mb-4 text-gray-800">Company Employees</h1>
 
-        <button type="submit">Filter</button>
-    </form>
+        <!-- Filter Form -->
+        <form method="GET" action="/dashboard" autocomplete="off" class="bg-white p-6 rounded-lg shadow mb-8 relative">
+            <div class="flex flex-col md:flex-row gap-4 md:items-end">
+                <div class="flex flex-col w-full md:w-1/4">
+                    <label for="field" class="mb-1 font-medium">Filter By:</label>
+                    <select name="field" id="field" class="select select-bordered w-full">
+                        <option value="id">ID</option>
+                        <option value="first_name">Name</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
 
-    <br>
+                <div class="flex flex-col w-full md:w-1/2 relative">
+                    <label for="value" class="mb-1 font-medium">Value:</label>
+                    <input type="text" id="value" name="value" placeholder="Enter value..." required 
+       class="input input-bordered ring-blue-400 w-full border-blue-500 ring-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400" />
 
-    <table border="1">
-        <tr><th>ID</th><th>Name</th><th>Job Title</th><th>Details</th></tr>
-        {% for emp in employees %}
-        <tr>
-            <td>{{ emp[0] }}</td>
-            <td>{{ emp[1] }}</td>
-            <td>{{ emp[2] }}</td>
-            <td><a href="/employee/{{ emp[0] }}">View</a></td>
-        </tr>
-        {% endfor %}
-    </table>
+                    <div id="suggestions" class="rounded-b-lg shadow-md"></div>
+                </div>
+
+                <div class="mt-2 md:mt-0">
+                    <button type="submit" class="btn btn-primary bg-sky-500 w-[100px] hover:bg-sky-600 text-white">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Employee Table -->
+        <div class="overflow-x-auto">
+            <table class="table table-zebra w-full bg-white shadow rounded-lg">
+                <thead class="bg-sky-100 text-sky-700">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Job Title</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>{{ emp[0] }}</td>
+                        <td>{{ emp[1] }}</td>
+                        <td>{{ emp[2] }}</td>
+                        <td>
+                            <a href="/employee/{{ emp[0] }}" 
+                               class="text-sky-500 hover:text-sky-700 font-medium underline">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <script>
         const input = document.getElementById("value");
@@ -63,8 +106,7 @@
 
         input.addEventListener("input", async () => {
             const text = input.value;
-
-            if (field.value !== "first_name" || text.length < 4) {
+            if (field.value !== "first_name" || text.length < 3) {
                 suggestions.style.display = "none";
                 return;
             }
@@ -83,6 +125,7 @@
             data.forEach(name => {
                 const div = document.createElement("div");
                 div.textContent = name;
+                div.classList.add("hover:bg-gray-100");
                 div.addEventListener("click", () => {
                     input.value = name;
                     suggestions.style.display = "none";
@@ -90,9 +133,6 @@
                 suggestions.appendChild(div);
             });
 
-            const rect = input.getBoundingClientRect();
-            suggestions.style.left = `${rect.left}px`;
-            suggestions.style.top = `${rect.bottom + window.scrollY}px`;
             suggestions.style.display = "block";
         });
 
@@ -102,5 +142,6 @@
             }
         });
     </script>
+
 </body>
 </html>

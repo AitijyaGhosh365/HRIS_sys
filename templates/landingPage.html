@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        @keyframes floatUpDown {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .animate-float {
+            animation: floatUpDown 3s ease-in-out infinite;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="navbar bg-base-100 shadow-sm flex justify-between">
+        <div class="left pl-10">
+
+            <a class="text-sky-500 font-extrabold text-4xl ">HRIX</a>
+        </div>
+
+        <div class="right pr-10">
+            <a class="font-semibold cursor-pointer text-1xl pl-10">Features</a>
+            <a class="font-semibold cursor-pointer text-1xl pl-10">Pricing</a>
+            <a class="font-semibold cursor-pointer text-1xl pl-10">About</a>
+            <a href="/dashboard" class="font-semibold cursor-pointer text-1xl pl-10">Sign up</a>
+        </div>
+    </div>
+
+    <div class="page-1 flex w-full h-screen">
+        <!-- Left Side -->
+        <div class="left flex flex-col  pt-48 w-1/2 ">
+            <a class="font-extrabold text-5xl pl-28 pb-6">
+                The all-in-one <span class="text-blue-400">HR software</span> for your business
+            </a>
+            <a class="font-normal text-2xl pl-28 mr-22 pb-6">
+                Streamline your HR processes with our comprehensive, cloud based HRIS and Payroll Solution
+            </a>
+            <a class="pl-28">
+
+                <button class="bg-blue-500 w-1/4 cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md 
+               transform hover:scale-105 transition duration-300 ease-in-out">
+                    Get Started
+                </button>
+            </a>
+
+
+        </div>
+
+        <!-- Right Side -->
+        <div class="right flex items-center pb-28 w-1/2">
+            <img src="/assets/hero.png" alt="Hero Image" class="max-w-full h-auto animate-float">
+        </div>
+    </div>
+
+    <div class="page-2 flex flex-col w-full h-[90vh] items-center" style="transform: translateY(-15%);">
+  
+  <!-- Section Heading -->
+  <h2 class="text-sky-400 font-bold text-5xl mb-12">Features</h2>
+
+  <!-- Feature Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-10 w-full max-w-6xl">
+    
+    <!-- Feature 1 -->
+    <div class="flex flex-col items-center text-center p-6 rounded-xl border-2 border-blue-500 bg-blue-100 h-60">
+      <img src="./assets/1.png" alt="Employee Database" class="mb-4 max-w-[154px] object-contain">
+      <a class="font-bold text-blue-700 text-lg">Employee Database Management</a>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="flex flex-col items-center text-center p-6 rounded-xl border-2 border-green-500 bg-green-100 h-60">
+      <img src="./assets/1.png" alt="Employee Database" class="mb-4 max-w-[154px] object-contain">
+      <a class="font-bold text-green-700 text-lg">Attendance Tracker</a>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="flex flex-col items-center text-center p-6 rounded-xl border-2 border-yellow-500 bg-yellow-100 h-60">
+      <img src="./assets/1.png" alt="Employee Database" class="mb-4 max-w-[154px] object-contain">
+      <a class="font-bold text-yellow-700 text-lg">Performance Management</a>
+    </div>
+
+    <!-- Feature 4 -->
+    <div class="flex flex-col items-center text-center p-6 rounded-xl border-2 border-purple-500 bg-purple-100 h-60">
+      <img src="./assets/1.png" alt="Employee Database" class="mb-4 max-w-[154px] object-contain">
+      <a class="font-bold text-purple-700 text-lg">Employee Onboarding</a>
+    </div>
+
+    <!-- Feature 5 -->
+    <div class="flex flex-col items-center text-center p-6 rounded-xl border-2 border-pink-500 bg-pink-100 h-60">
+      <img src="./assets/1.png" alt="Employee Database" class="mb-4 max-w-[154px] object-contain">
+      <a class="font-bold text-pink-700 text-lg">Timesheets</a>
+    </div>
+
+    <!-- Feature 6 -->
+    <div class="flex flex-col items-center text-center p-6 rounded-xl border-2 border-indigo-500 bg-indigo-100 h-60">
+      <img src="./assets/1.png" alt="Employee Database" class="mb-4 max-w-[154px] object-contain">
+      <a class="font-bold text-indigo-700 text-lg">Learning Management</a>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<footer class="bg-gray-100 text-gray-700 py-10 px-6">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+
+    <!-- Column 1: Logo & Description -->
+    <div>
+      <h1 class="text-2xl font-bold text-sky-500 mb-2">HRIX</h1>
+      <p>Your all-in-one HR management platform, simplifying employee workflows and boosting productivity.</p>
+    </div>
+
+    <!-- Column 2: Quick Links -->
+    <div>
+      <h2 class="font-semibold text-gray-800 mb-3">Quick Links</h2>
+      <ul class="space-y-2">
+        <li><a href="#" class="hover:text-sky-500">Features</a></li>
+        <li><a href="#" class="hover:text-sky-500">Pricing</a></li>
+        <li><a href="#" class="hover:text-sky-500">About Us</a></li>
+        <li><a href="#" class="hover:text-sky-500">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 3: Contact -->
+    <div>
+      <h2 class="font-semibold text-gray-800 mb-3">Contact</h2>
+      <ul class="space-y-2">
+        <li>Email: <a href="mailto:support@hrix.com" class="hover:text-sky-500">support@hrix.com</a></li>
+        <li>Phone: <a href="#" class="hover:text-sky-500">+91 98765 43210</a></li>
+        <li>Location: Bengaluru, India</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="text-center text-xs text-gray-500 mt-10">
+    © 2025 HRIX. All rights reserved.
+  </div>
+</footer>
+
+</body>
+
+</html>

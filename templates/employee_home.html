@@ -1,22 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Employee Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h2>Welcome {{ username }}!</h2>
+<body class="min-h-screen bg-blue-50 flex items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-md text-center">
+        <h2 class="text-2xl font-bold text-blue-600 mb-6">Welcome {{ username }}!</h2>
 
-        {% if message %}
-        <p style="color: green;">{{ message }}</p>
-        {% endif %}
-    <form method="POST" action="/checkin">
-        <input type="hidden" name="username" value="{{ username }}">
-        <button type="submit">Check In</button>
-    </form>
+        <!-- Check In Button -->
+        <button onclick="showTime('checkin-time')" 
+                class="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mb-4">
+            Check In
+        </button>
+        <p id="checkin-time" class="text-sm text-gray-700 mb-4 hidden">
+            ✅ Checked in at: <span class="font-medium" id="checkin-clock"></span>
+        </p>
 
-    <form method="POST" action="/checkout">
-        <input type="hidden" name="username" value="{{ username }}">
-        <button type="submit">Check Out</button>
-    </form>
+        <!-- Check Out Button -->
+        <button onclick="showTime('checkout-time')" 
+                class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded mb-4">
+            Check Out
+        </button>
+        <p id="checkout-time" class="text-sm text-gray-700 hidden">
+            🕔 Checked out at: <span class="font-medium" id="checkout-clock"></span>
+        </p>
+    </div>
+
+    <script>
+        function showTime(targetId) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            if (targetId === 'checkin-time') {
+                document.getElementById('checkin-clock').textContent = timeString;
+                document.getElementById('checkin-time').classList.remove('hidden');
+            } else if (targetId === 'checkout-time') {
+                document.getElementById('checkout-clock').textContent = timeString;
+                document.getElementById('checkout-time').classList.remove('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
