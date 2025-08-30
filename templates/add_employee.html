@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Employee</title>
+</head>
+<body>
+    <h2>Add New Employee (Next ID: {{ next_id }})</h2>
+
+    {% if success %}
+        <p style="color: green;">{{ success }}</p>
+    {% endif %}
+
+    <form method="post" action="/admin/add-employee">
+        <label>First Name:</label><input type="text" name="first_name" required><br>
+        <label>Middle Name:</label><input type="text" name="middle_name"><br>
+        <label>Last Name:</label><input type="text" name="last_name" required><br>
+        <label>Email:</label><input type="email" name="email" required><br>
+        <label>Phone Number:</label><input type="text" name="phone_number"><br>
+        <label>Dept Id:</label><input type="text" name="dept_id"><br>
+        <label>Hire Date:</label><input type="date" name="hire_date" required><br>
+        <label>Exit Date:</label><input type="date" name="exit_date"><br>
+        <label>Job Title:</label><input type="text" name="job_title" required><br>
+        <label>Salary CTC:</label><input type="number" name="ctc" step="0.01" required><br>
+        <label>Allowances:</label><input type="number" name="allowances" step="0.01"><br>
+        <label>Field3:</label><input type="number" name="field3" step="0.01"><br>
+        <label>Field4:</label><input type="number" name="field4" step="0.01"><br>
+        <label>Status:</label>
+        <select name="status">
+            <option value="Active" selected>Active</option>
+            <option value="Inactive">Inactive</option>
+        </select><br>
+        <label>Role:</label>
+        <select name="role">
+            <option value="User" selected>User</option>
+            <option value="Admin">Admin</option>
+        </select><br>
+        <label>Date of Birth:</label><input type="date" name="dob"><br>
+
+        <button type="submit">Add Employee</button>
+    </form>
+</body>
+</html>
