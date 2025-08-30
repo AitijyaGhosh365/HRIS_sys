@@ -47,16 +47,20 @@
               <th>Check-in</th>
               <th>Check-out</th>
               <th>Status</th>
+              <th>Checkin Location</th>
+              <th>Checkout Location</th>
             </tr>
           </thead>
           <tbody>
             {% for att in attendance %}
             <tr>
-              <td>{{ att[0] }}</td>
-              <td>{{ att[1] }}</td>
-              <td>{{ att[2] }}</td>
-              <td>{{ att[3] }}</td>
-              <td>{{ att[4] }}</td>
+                <td>{{ att[0] }}</td>
+                <td>{{ att[1] or '-' }}</td>
+                <td>{{ att[2] or '-' }}</td>
+                <td>{{ att[3] or '-' }}</td>
+                <td>{{ att[4] or '-' }}</td>
+                <td>{{ att[5] or '-' }}</td>
+                <td>{{ att[6] or '-' }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -142,3 +146,4 @@
 
 </body>
 </html>
+
